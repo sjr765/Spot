@@ -1,6 +1,6 @@
 let ToneAnalyzerV3 = require('watson-developer-cloud/tone-analyzer/v3')
 
-const TONE_ACCESS_TOKEN = proces.env.TONE_ACCESS_TOKEN
+const TONE_ACCESS_TOKEN = process.env.TONE_ACCESS_TOKEN
 
 let toneAnalyzer = new ToneAnalyzerV3({
   version: '2017-09-21',
