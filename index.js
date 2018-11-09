@@ -1,14 +1,15 @@
 'use strict'
+
+import toneAnalyzer from './toneAnalyzer'
+
 const PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN
 
-// Imports dependencies and set up http server
 const express = require('express'),
   bodyParser = require('body-parser'),
-  app = express().use(bodyParser.json()) // creates express http server
+  app = express().use(bodyParser.json())
 
 const request = require('request')
 
-// Sets server port and logs message on success
 app.listen(process.env.PORT || 1337, () => console.log('webhook is listening'))
 
 // Creates the endpoint for our webhook
@@ -31,6 +32,25 @@ app.post('/webhook', (req, res) => {
       // Check if the event is a message or postback and
       // pass the event to the appropriate handler function
       if (webhook_event.message) {
+        //WATSON ANALYSIS
+        const text = webhook_event.message
+        const toneParams = {
+          tone_input: {text: text},
+          content_type: 'application/json'
+        }
+
+        toneAnalyzer.tone(toneParams, function(error, toneAnalysis) {
+          if (error) {
+            console.log(error)
+          } else {
+            console.log('======== TONE ANALYSIS FROM WATSON ============')
+            console.log(JSON.stringify(toneAnalysis, null, 2))
+            console.log(
+              '======== END OF TONE ANALYSIS FROM WATSON ============'
+            )
+          }
+        })
+        //handle message
         handleMessage(sender_psid, webhook_event.message)
       } else if (webhook_event.postback) {
         handlePostback(sender_psid, webhook_event.postback)
