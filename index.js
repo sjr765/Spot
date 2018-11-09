@@ -1,6 +1,6 @@
 'use strict'
 
-import toneAnalyzer from './toneAnalyzer'
+// import toneAnalyzer from './toneAnalyzer'
 
 const PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN
 
