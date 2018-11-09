@@ -1,6 +1,6 @@
 'use strict'
 
-import toneAnalyzer from './toneAnalyzer'
+const toneAnalyzer = require('./toneAnalyzer')
 
 const PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN
 
