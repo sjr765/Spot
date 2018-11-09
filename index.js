@@ -33,9 +33,10 @@ app.post('/webhook', (req, res) => {
       // pass the event to the appropriate handler function
       if (webhook_event.message) {
         //WATSON ANALYSIS
-        const text = webhook_event.message
+
+        const chatBotText = webhook_event.message.text
         const toneParams = {
-          tone_input: {text: text},
+          tone_input: {text: chatBotText},
           content_type: 'application/json'
         }
 
