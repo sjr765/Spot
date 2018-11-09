@@ -37,7 +37,8 @@ app.post('/webhook', (req, res) => {
         const chatBotText = webhook_event.message.text
         const toneParams = {
           tone_input: {text: chatBotText},
-          content_type: 'application/json'
+          content_type: 'application/json',
+          sentence: false
         }
 
         toneAnalyzer.tone(toneParams, function(error, toneAnalysis) {
