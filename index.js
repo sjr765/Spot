@@ -1,6 +1,6 @@
 'use strict'
 
-// import toneAnalyzer from './toneAnalyzer'
+import toneAnalyzer from './toneAnalyzer'
 
 const PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN
 
@@ -33,23 +33,23 @@ app.post('/webhook', (req, res) => {
       // pass the event to the appropriate handler function
       if (webhook_event.message) {
         //WATSON ANALYSIS
-        // const text = webhook_event.message
-        // const toneParams = {
-        //   tone_input: {text: text},
-        //   content_type: 'application/json'
-        // }
+        const text = webhook_event.message
+        const toneParams = {
+          tone_input: {text: text},
+          content_type: 'application/json'
+        }
 
-        // toneAnalyzer.tone(toneParams, function(error, toneAnalysis) {
-        //   if (error) {
-        //     console.log(error)
-        //   } else {
-        //     console.log('======== TONE ANALYSIS FROM WATSON ============')
-        //     console.log(JSON.stringify(toneAnalysis, null, 2))
-        //     console.log(
-        //       '======== END OF TONE ANALYSIS FROM WATSON ============'
-        //     )
-        //   }
-        // })
+        toneAnalyzer.tone(toneParams, function(error, toneAnalysis) {
+          if (error) {
+            console.log(error)
+          } else {
+            console.log('======== TONE ANALYSIS FROM WATSON ============')
+            console.log(JSON.stringify(toneAnalysis, null, 2))
+            console.log(
+              '======== END OF TONE ANALYSIS FROM WATSON ============'
+            )
+          }
+        })
         //handle message
         handleMessage(sender_psid, webhook_event.message)
       } else if (webhook_event.postback) {

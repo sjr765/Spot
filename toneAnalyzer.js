@@ -37,7 +37,6 @@ let toneAnalyzer = new ToneAnalyzerV3({
 //   }
 // })
 
-
-module.exports{
+module.exports = {
   toneAnalyzer
 }
