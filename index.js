@@ -1,6 +1,11 @@
 'use strict'
 
 const {toneAnalyzer} = require('./toneAnalyzer')
+const request = require('request')
+const path = require('path')
+var cors = require('cors')
+var querystring = require('querystring')
+var cookieParser = require('cookie-parser')
 
 const PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN
 const SPOTIFY_CLIENT_ID = process.env.SPOTIFY_CLIENT_ID
@@ -10,12 +15,6 @@ const SPOTIFY_REDIRECT_URL = 'http://www.m.me/SpotChatBot'
 const express = require('express'),
   bodyParser = require('body-parser'),
   app = express().use(bodyParser.json())
-
-const request = require('request')
-const path = require('path')
-var cors = require('cors')
-var querystring = require('querystring')
-var cookieParser = require('cookie-parser')
 
 app.listen(process.env.PORT || 1337, () => console.log('webhook is listening'))
 app.use(express.static(path.join(__dirname, 'public')))
