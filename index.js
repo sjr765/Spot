@@ -69,14 +69,17 @@ app.post('/webhook', (req, res) => {
         })
 
         console.log('!!!!!!!!!!!!!!! SPOTIFY API CALL HERE!!!!!!!!!')
-        spotifyApi.getArtistAlbums('43ZHCT0cAZBISjO8DG9PnE').then(
-          function(data) {
-            console.log('Artist albums', data.body)
-          },
-          function(err) {
-            console.error(err)
+        spotifyApi.getArtistAlbums(
+          '43ZHCT0cAZBISjO8DG9PnE',
+          {limit: 10, offset: 20},
+          function(err, data) {
+            if (err) {
+              console.error('Something went wrong!')
+            } else {
+              console.log(data.body)
+            }
           }
-        )
+        )()
         console.log('!!!!!!!!!!!!!!! SPOTIFY API END HERE!!!!!!!!!')
 
         //handle message
