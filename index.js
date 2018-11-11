@@ -156,10 +156,10 @@ function handleMessage(sender_psid, received_message) {
       response = {
         text: `WOOF Hi there! I'm Spot the Spotify Dog. I'd love to give you some song recomendations based on how you're feeling today. Does that sound good to you?`
       }
-      if (counter === 1) {
-        response = {
-          text: 'WOOF Perfect, Lets get started! WOOF'
-        }
+    }
+    if (counter === 1) {
+      response = {
+        text: 'WOOF Perfect, Lets get started! WOOF'
       }
     }
   } else if (received_message.attachments) {
