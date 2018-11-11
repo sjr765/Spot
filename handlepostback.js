@@ -1,5 +1,5 @@
 // Handles messaging_postbacks events
-export const handlePostback = function(sender_psid, received_postback) {
+function handlePostback(sender_psid, received_postback) {
   let response
 
   // Get the payload for the postback
@@ -13,4 +13,8 @@ export const handlePostback = function(sender_psid, received_postback) {
   }
   // Send the message to acknowledge the postback
   callSendAPI(sender_psid, response)
+}
+
+module.exports = {
+  handlePostback
 }
