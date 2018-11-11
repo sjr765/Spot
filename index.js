@@ -22,10 +22,15 @@ const spotifyApi = new SpotifyWebApi({
 app.listen(process.env.PORT || 1337, () => console.log('webhook is listening'))
 app.use(express.static(path.join(__dirname, 'public')))
 
-// app.get('/artist', () => {
-
-// })
-
+app.get('/', function(req, res) {
+  res.redirect('https://accounts.spotify.com/authorize?')
+  querystring.stringify({
+    response_type: 'code',
+    client_id: process.env.SPOTIFY_CLIENT_ID,
+    scope: 'user-read-private user-read-email',
+    redirectUri
+  })
+})
 // Creates the endpoint for our webhook
 app.post('/webhook', (req, res) => {
   // Parse the request body from the POST
