@@ -5,6 +5,7 @@ const passport = require('passport')
 const request = require('request')
 const path = require('path')
 // const SpotifyStrategy = require('passport-spotify').Strategy
+const SpotifyWebApi = require('spotify-web-api-node')
 
 const PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN
 
