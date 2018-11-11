@@ -99,7 +99,7 @@ app.post('/webhook', (req, res) => {
               limit: '1',
               market: 'US',
               seed_genres: 'funk',
-              min_popularity: '40'
+              min_popularity: '20'
             }
           }).then(response => {
             console.log('RESPONSE.DATA.TRACKS', response.data.tracks)
