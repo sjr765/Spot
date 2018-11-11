@@ -2,11 +2,10 @@
 
 const {toneAnalyzer} = require('./toneAnalyzer')
 const {spotifyApi} = require('./spotifyAPI')
-
+const passport = require('passport')
 const request = require('request')
 const path = require('path')
-const SpotifyWebApi = require('spotify-web-api-node')
-const axios = require('axios')
+const SpotifyStrategy = require('passport-spotify').Strategy
 
 const PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN
 
@@ -16,6 +15,21 @@ const express = require('express'),
 
 app.listen(process.env.PORT || 1337, () => console.log('webhook is listening'))
 app.use(express.static(path.join(__dirname, 'public')))
+
+passport.use(
+  new SpotifyStrategy(
+    {
+      clientID: client_id,
+      clientSecret: client_secret,
+      callbackURL: 'http://localhost:8888/auth/spotify/callback'
+    },
+    function(accessToken, refreshToken, expires_in, profile, done) {
+      User.findOrCreate({spotifyId: profile.id}, function(err, user) {
+        return done(err, user)
+      })
+    }
+  )
+)
 
 app.get('/', function(req, res) {
   res.redirect('https://accounts.spotify.com/authorize?')
@@ -69,6 +83,7 @@ app.post('/webhook', (req, res) => {
         })
 
         console.log('!!!!!!!!!!!!!!! SPOTIFY API CALL HERE!!!!!!!!!')
+        passport.authenticate('spotify')
         spotifyApi.getArtistAlbums(
           '43ZHCT0cAZBISjO8DG9PnE',
           {limit: 10, offset: 20},
