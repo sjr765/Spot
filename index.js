@@ -104,6 +104,7 @@ app.post('/webhook', (req, res) => {
         spotifyApi.searchTracks('artist:Love').then(
           function(data) {
             console.log(data.body)
+            console.log(data.body.tracks.items[1])
           },
           function(err) {
             console.log('Something went wrong!', err)
