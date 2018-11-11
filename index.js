@@ -101,7 +101,11 @@ app.post('/webhook', (req, res) => {
         console.log('!!!!!!!!!!!!!!! SPOTIFY API CALL HERE!!!!!!!!!')
         // passport.authenticate('spotify')
         // Do search using the access token
-        spotifyApi.searchTracks('artist:Love').then(
+        getRecommendations({
+          min_energy: 0.4,
+          seed_artists: ['6mfK6Q2tzLMEchAr0e9Uzu', '4DYFVNKZ1uixa6SQTvzQwJ'],
+          min_popularity: 50
+        }).then(
           function(data) {
             console.log(data.body)
             console.log(data.body.tracks.items[1])
@@ -150,10 +154,6 @@ app.get('/webhook', (req, res) => {
     }
   }
 })
-
-// SPOTIFY BEGINS HERE:
-
-//VVVVVVVVVVVVVVVVVVVVVVVV
 
 // Handles messages events
 function handleMessage(sender_psid, received_message) {
