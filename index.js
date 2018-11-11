@@ -1,6 +1,7 @@
 'use strict'
 
 const {toneAnalyzer} = require('./toneAnalyzer')
+const {spotifyApi} = require('./spotifyAPI')
 
 const request = require('request')
 const path = require('path')
@@ -12,12 +13,6 @@ const PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN
 const express = require('express'),
   bodyParser = require('body-parser'),
   app = express().use(bodyParser.json())
-
-const spotifyApi = new SpotifyWebApi({
-  clientId: process.env.SPOTIFY_CLIENT_ID,
-  clientSecret: process.env.SPOTIFY_CLIENT_SECRET,
-  redirectUri: process.env.SPOTIFY_CALLBACK
-})
 
 app.listen(process.env.PORT || 1337, () => console.log('webhook is listening'))
 app.use(express.static(path.join(__dirname, 'public')))
