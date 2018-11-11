@@ -25,7 +25,8 @@ spotifyApi.clientCredentialsGrant().then(
     spotifyApi.setAccessToken(data.body['access_token'])
     console.log(
       '==============SPOTIFY API BODY===========',
-      spotifyApi._credentials
+      spotifyApi._credentials,
+      accessToken
     )
   },
   function(err) {
@@ -84,23 +85,23 @@ app.post('/webhook', (req, res) => {
 
         const chatBotText = webhook_event.message.text
 
-        const toneParams = {
-          tone_input: {text: chatBotText},
-          content_type: 'application/json',
-          sentences: false
-        }
+        // const toneParams = {
+        //   tone_input: {text: chatBotText},
+        //   content_type: 'application/json',
+        //   sentences: false
+        // }
 
-        toneAnalyzer.tone(toneParams, function(error, toneAnalysis) {
-          if (error) {
-            console.log(error)
-          } else {
-            console.log('======== TONE ANALYSIS FROM WATSON ============')
-            console.log(JSON.stringify(toneAnalysis, null, 2))
-            console.log(
-              '======== END OF TONE ANALYSIS FROM WATSON ============'
-            )
-          }
-        })
+        // toneAnalyzer.tone(toneParams, function(error, toneAnalysis) {
+        //   if (error) {
+        //     console.log(error)
+        //   } else {
+        //     console.log('======== TONE ANALYSIS FROM WATSON ============')
+        //     console.log(JSON.stringify(toneAnalysis, null, 2))
+        //     console.log(
+        //       '======== END OF TONE ANALYSIS FROM WATSON ============'
+        //     )
+        //   }
+        // })
 
         console.log('!!!!!!!!!!!!!!! SPOTIFY API CALL HERE!!!!!!!!!')
         // passport.authenticate('spotify')
