@@ -102,17 +102,20 @@ app.post('/webhook', (req, res) => {
           }
         )
 
-        spotifyApi.getArtistAlbums(
-          '43ZHCT0cAZBISjO8DG9PnE',
-          {limit: 10, offset: 20},
-          function(err, data) {
-            if (err) {
-              console.error('Something went wrong!')
-            } else {
-              console.log(data.body)
+        spotifyApi
+          .getPlaylistTracks('thelinmichael', '3ktAYNcRHpazJ9qecm3ptn', {
+            offset: 1,
+            limit: 5,
+            fields: 'items'
+          })
+          .then(
+            function(data) {
+              console.log('The playlist contains these tracks', data.body)
+            },
+            function(err) {
+              console.log('Something went wrong!', err)
             }
-          }
-        )
+          )
         console.log('!!!!!!!!!!!!!!! SPOTIFY API END HERE!!!!!!!!!')
 
         //handle message
