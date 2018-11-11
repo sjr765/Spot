@@ -14,11 +14,7 @@ const spotifyApi = new SpotifyWebApi({
   clientSecret: process.env.SPOTIFY_CLIENT_SECRET,
   redirectUri: process.env.SPOTIFY_CALLBACK
 })
-const {
-  handleMessage,
-  callSendApi,
-  handlePostback
-} = require('./messagefunctions')
+import {handleMessage, callSendApi, handlePostback} from '/messagefunctions'
 
 spotifyApi.clientCredentialsGrant().then(
   function(data) {
