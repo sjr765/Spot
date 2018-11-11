@@ -193,10 +193,10 @@ function handleMessage(sender_psid, received_message) {
       }
     }
   }
+  counter++
 
   // Sends the response message
   callSendAPI(sender_psid, response)
-  counter++
 }
 
 // Handles messaging_postbacks events
