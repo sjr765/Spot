@@ -1,7 +1,6 @@
 'use strict'
 
 const {toneAnalyzer} = require('./toneAnalyzer')
-const {spotifyApi} = require('./spotifyAPI')
 const passport = require('passport')
 const request = require('request')
 const path = require('path')
@@ -12,6 +11,22 @@ const PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN
 const express = require('express'),
   bodyParser = require('body-parser'),
   app = express().use(bodyParser.json())
+
+// credentials are optional
+var spotifyApi = new SpotifyWebApi({
+  clientId: process.env.SPOTIFY_CLIENT_ID,
+  clientSecret: process.env.SPOTIFY_CLIENT_SECRET,
+  redirectUri: process.env.SPOTIFY_CALLBACK
+})
+spotifyApi.clientCredentialsGrant().then(
+  function(data) {
+    console.log('The access token is ' + data.body['access_token'])
+    spotifyApi.setAccessToken(data.body['access_token'])()
+  },
+  function(err) {
+    console.log('Something went wrong!', err)
+  }
+)
 
 app.listen(process.env.PORT || 1337, () => console.log('webhook is listening'))
 app.use(express.static(path.join(__dirname, 'public')))
@@ -84,38 +99,15 @@ app.post('/webhook', (req, res) => {
 
         console.log('!!!!!!!!!!!!!!! SPOTIFY API CALL HERE!!!!!!!!!')
         // passport.authenticate('spotify')
-        spotifyApi.clientCredentialsGrant().then(
+        // Do search using the access token
+        spotifyApi.searchTracks('artist:Love').then(
           function(data) {
-            console.log(
-              'The access token expires in ' + data.body['expires_in']
-            )
-            console.log('The access token is ' + data.body['access_token'])
-
-            // Save the access token so that it's used in future calls
-            spotifyApi.setAccessToken(data.body['access_token'])
+            console.log(data.body)
           },
           function(err) {
-            console.log(
-              'Something went wrong when retrieving an access token',
-              err
-            )
+            console.log('Something went wrong!', err)
           }
         )
-
-        spotifyApi
-          .getPlaylistTracks('thelinmichael', '3ktAYNcRHpazJ9qecm3ptn', {
-            offset: 1,
-            limit: 5,
-            fields: 'items'
-          })
-          .then(
-            function(data) {
-              console.log('The playlist contains these tracks', data.body)
-            },
-            function(err) {
-              console.log('Something went wrong!', err)
-            }
-          )
         console.log('!!!!!!!!!!!!!!! SPOTIFY API END HERE!!!!!!!!!')
 
         //handle message
