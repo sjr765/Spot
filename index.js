@@ -103,7 +103,7 @@ app.post('/webhook', (req, res) => {
         )
 
         spotifyApi.getArtistAlbums(
-          '43ZHCT0cAZBISjO8DG9PnE',
+          spotifyApi.getAccessToken(),
           {limit: 10, offset: 20},
           function(err, data) {
             if (err) {
