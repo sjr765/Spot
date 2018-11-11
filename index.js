@@ -1,6 +1,6 @@
 'use strict'
 
-// const {toneAnalyzer} = require('./toneAnalyzer')
+const {toneAnalyzer} = require('./toneAnalyzer')
 
 const request = require('request')
 const path = require('path')
