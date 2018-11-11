@@ -19,7 +19,7 @@ const {
   handlePostback,
   callSendAPI,
   handleMessage
-} = require('./messagefunctions')
+} = require('./messagefunctions/index.js')
 
 spotifyApi.clientCredentialsGrant().then(
   function(data) {
