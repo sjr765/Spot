@@ -1,5 +1,5 @@
 // Handles messages events
-function handleMessage(sender_psid, received_message) {
+export function handleMessage(sender_psid, received_message) {
   let response
 
   // Check if the message contains text
@@ -47,7 +47,7 @@ function handleMessage(sender_psid, received_message) {
 }
 
 // Handles messaging_postbacks events
-function handlePostback(sender_psid, received_postback) {
+export function handlePostback(sender_psid, received_postback) {
   let response
 
   // Get the payload for the postback
@@ -64,7 +64,7 @@ function handlePostback(sender_psid, received_postback) {
 }
 
 // Sends response messages via the Send API
-function callSendAPI(sender_psid, response) {
+export function callSendAPI(sender_psid, response) {
   // Construct the message body
   let request_body = {
     recipient: {
@@ -89,10 +89,4 @@ function callSendAPI(sender_psid, response) {
       }
     }
   )
-}
-
-module.exports = {
-  handleMessage,
-  callSendAPI,
-  handlePostback
 }
