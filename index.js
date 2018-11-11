@@ -5,7 +5,7 @@ const {spotifyApi} = require('./spotifyAPI')
 const passport = require('passport')
 const request = require('request')
 const path = require('path')
-const SpotifyStrategy = require('passport-spotify').Strategy
+// const SpotifyStrategy = require('passport-spotify').Strategy
 
 const PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN
 
@@ -16,20 +16,20 @@ const express = require('express'),
 app.listen(process.env.PORT || 1337, () => console.log('webhook is listening'))
 app.use(express.static(path.join(__dirname, 'public')))
 
-passport.use(
-  new SpotifyStrategy(
-    {
-      clientID: process.env.SPOTIFY_CLIENT_ID,
-      clientSecret: process.env.SPOTIFY_CLIENT_SECRET,
-      callbackURL: process.env.SPOTIFY_CALLBACK
-    },
-    function(accessToken, refreshToken, expires_in, profile, done) {
-      User.findOrCreate({spotifyId: profile.id}, function(err, user) {
-        return done(err, user)
-      })
-    }
-  )
-)
+// passport.use(
+//   new SpotifyStrategy(
+//     {
+//       clientID: process.env.SPOTIFY_CLIENT_ID,
+//       clientSecret: process.env.SPOTIFY_CLIENT_SECRET,
+//       callbackURL: process.env.SPOTIFY_CALLBACK
+//     },
+//     function(accessToken, refreshToken, expires_in, profile, done) {
+//       User.findOrCreate({spotifyId: profile.id}, function(err, user) {
+//         return done(err, user)
+//       })
+//     }
+//   )
+// )
 
 app.get('/', function(req, res) {
   res.redirect('https://accounts.spotify.com/authorize?')
@@ -83,7 +83,25 @@ app.post('/webhook', (req, res) => {
         })
 
         console.log('!!!!!!!!!!!!!!! SPOTIFY API CALL HERE!!!!!!!!!')
-        passport.authenticate('spotify')
+        // passport.authenticate('spotify')
+        spotifyApi.clientCredentialsGrant().then(
+          function(data) {
+            console.log(
+              'The access token expires in ' + data.body['expires_in']
+            )
+            console.log('The access token is ' + data.body['access_token'])
+
+            // Save the access token so that it's used in future calls
+            spotifyApi.setAccessToken(data.body['access_token'])
+          },
+          function(err) {
+            console.log(
+              'Something went wrong when retrieving an access token',
+              err
+            )
+          }
+        )
+
         spotifyApi.getArtistAlbums(
           '43ZHCT0cAZBISjO8DG9PnE',
           {limit: 10, offset: 20},
