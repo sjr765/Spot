@@ -51,16 +51,13 @@ app.post('/webhook', (req, res) => {
       let webhook_event = entry.messaging[0]
       console.log(webhook_event)
 
-      // Get the sender PSID
       let sender_psid = webhook_event.sender.id
       console.log('Sender PSID: ' + sender_psid)
 
-      // Check if the event is a message or postback and
-      // pass the event to the appropriate handler function
       if (webhook_event.message) {
         //WATSON ANALYSIS
 
-        const chatBotText = webhook_event.message.text
+        // const chatBotText = webhook_event.message.text
 
         // const toneParams = {
         //   tone_input: {text: chatBotText},
@@ -106,15 +103,6 @@ app.post('/webhook', (req, res) => {
           console.error(err)
         }
 
-        // spotifyApi.searchTracks('artist:Love').then(
-        //   function(data) {
-        //     console.log(data.body)
-        //     console.log(data.body.tracks.items[1])
-        //   },
-        //   function(err) {
-        //     console.log('Something went wrong!', err)
-        //   }
-        // )
         console.log('!!!!!!!!!!!!!!! SPOTIFY API END HERE!!!!!!!!!')
 
         //handle message
@@ -159,14 +147,20 @@ app.get('/webhook', (req, res) => {
 // Handles messages events
 function handleMessage(sender_psid, received_message) {
   let response
+  let counter = 0
 
   // Check if the message contains text
   if (received_message.text) {
     // Create the payload for a basic text message
-    response = {
-      text: `You sent the message: "${
-        received_message.text
-      }". Now send me an image!`
+    if (counter === 0) {
+      response = {
+        text: `WOOF Hi there! I'm Spot the Spotify Dog. I'd love to give you some song recomendations based on how you're feeling today. Does that sound good to you?`
+      }
+      if (counter === 1) {
+        response = {
+          text: 'WOOF Perfect, Lets get started! WOOF'
+        }
+      }
     }
   } else if (received_message.attachments) {
     // Get the URL of the message attachment
