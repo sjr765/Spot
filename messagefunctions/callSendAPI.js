@@ -1,5 +1,5 @@
 // Sends response messages via the Send API
-export default function callSendAPI(sender_psid, response) {
+export const callSendAPI = function(sender_psid, response) {
   // Construct the message body
   let request_body = {
     recipient: {

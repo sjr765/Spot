@@ -1,5 +1,5 @@
 // Handles messaging_postbacks events
-export default function handlePostback(sender_psid, received_postback) {
+export const handlePostback = function(sender_psid, received_postback) {
   let response
 
   // Get the payload for the postback

@@ -1,5 +1,5 @@
 // Handles messages events
-export default function handleMessage(sender_psid, received_message) {
+export const handleMessage = function(sender_psid, received_message) {
   let response
 
   // Check if the message contains text
