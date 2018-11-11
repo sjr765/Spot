@@ -22,12 +22,12 @@ passport.use(
       clientID: process.env.SPOTIFY_CLIENT_ID,
       clientSecret: process.env.SPOTIFY_CLIENT_SECRET,
       callbackURL: process.env.SPOTIFY_CALLBACK
+    },
+    function(accessToken, refreshToken, expires_in, profile, done) {
+      User.findOrCreate({spotifyId: profile.id}, function(err, user) {
+        return done(err, user)
+      })
     }
-    // function(accessToken, refreshToken, expires_in, profile, done) {
-    //   User.findOrCreate({spotifyId: profile.id}, function(err, user) {
-    //     return done(err, user)
-    //   })
-    // }
   )
 )
 
