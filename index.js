@@ -12,6 +12,7 @@ const express = require('express'),
   app = express().use(bodyParser.json())
 
 const request = require('request')
+const path = require('path')
 
 app.listen(process.env.PORT || 1337, () => console.log('webhook is listening'))
 app.use(express.static(path.join(__dirname, '.', 'public')))
