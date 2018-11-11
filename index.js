@@ -6,6 +6,7 @@ const request = require('request')
 const path = require('path')
 // const SpotifyStrategy = require('passport-spotify').Strategy
 const SpotifyWebApi = require('spotify-web-api-node')
+const axios = require('axios')
 
 const PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN
 
@@ -23,43 +24,26 @@ spotifyApi.clientCredentialsGrant().then(
   function(data) {
     console.log('The access token is ' + data.body['access_token'])
     spotifyApi.setAccessToken(data.body['access_token'])
-    console.log(
-      '==============SPOTIFY API BODY===========',
-      spotifyApi._credentials.accessToken
-    )
   },
   function(err) {
     console.log('Something went wrong!', err)
   }
 )
+const spotifyUserToken = spotifyApi._credentials.accessToken
 
 app.listen(process.env.PORT || 1337, () => console.log('webhook is listening'))
 app.use(express.static(path.join(__dirname, 'public')))
 
-// passport.use(
-//   new SpotifyStrategy(
-//     {
-//       clientID: process.env.SPOTIFY_CLIENT_ID,
-//       clientSecret: process.env.SPOTIFY_CLIENT_SECRET,
-//       callbackURL: process.env.SPOTIFY_CALLBACK
-//     },
-//     function(accessToken, refreshToken, expires_in, profile, done) {
-//       User.findOrCreate({spotifyId: profile.id}, function(err, user) {
-//         return done(err, user)
-//       })
-//     }
-//   )
-// )
+// app.get('/', function(req, res) {
+//   res.redirect('https://accounts.spotify.com/authorize?')
+//   querystring.stringify({
+//     response_type: 'code',
+//     client_id: process.env.SPOTIFY_CLIENT_ID,
+//     scope: 'user-read-private user-read-email',
+//     redirectUri
+//   })
+// })
 
-app.get('/', function(req, res) {
-  res.redirect('https://accounts.spotify.com/authorize?')
-  querystring.stringify({
-    response_type: 'code',
-    client_id: process.env.SPOTIFY_CLIENT_ID,
-    scope: 'user-read-private user-read-email',
-    redirectUri
-  })
-})
 // Creates the endpoint for our webhook
 app.post('/webhook', (req, res) => {
   // Parse the request body from the POST
@@ -103,17 +87,39 @@ app.post('/webhook', (req, res) => {
         // })
 
         console.log('!!!!!!!!!!!!!!! SPOTIFY API CALL HERE!!!!!!!!!')
-        // passport.authenticate('spotify')
-        // Do search using the access token
-        spotifyApi.searchTracks('artist:Love').then(
-          function(data) {
-            console.log(data.body)
-            console.log(data.body.tracks.items[1])
-          },
-          function(err) {
-            console.log('Something went wrong!', err)
-          }
-        )
+
+        try {
+          axios({
+            method: 'get',
+            url: 'https://api.spotify.com/v1/recommendations',
+            headers: {
+              Authorization: 'Bearer ' + spotifyUserToken
+            },
+            params: {
+              limit: '1',
+              market: 'US',
+              seed_genres: 'funk',
+              min_popularity: '40'
+            }
+          }).then(response => {
+            console.log('RESPONSE.DATA.TRACKS', response.data.tracks)
+            // console.log('*****WHOLE RESPONSE*****', response)
+            const recommendedSongs = response.data.tracks
+            res.json(recommendedSongs)
+          })
+        } catch (err) {
+          console.error(err)
+        }
+
+        // spotifyApi.searchTracks('artist:Love').then(
+        //   function(data) {
+        //     console.log(data.body)
+        //     console.log(data.body.tracks.items[1])
+        //   },
+        //   function(err) {
+        //     console.log('Something went wrong!', err)
+        //   }
+        // )
         console.log('!!!!!!!!!!!!!!! SPOTIFY API END HERE!!!!!!!!!')
 
         //handle message
