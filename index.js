@@ -29,7 +29,6 @@ spotifyApi.clientCredentialsGrant().then(
     console.log('Something went wrong!', err)
   }
 )
-const spotifyUserToken = spotifyApi._credentials.accessToken
 
 app.listen(process.env.PORT || 1337, () => console.log('webhook is listening'))
 app.use(express.static(path.join(__dirname, 'public')))
@@ -87,6 +86,7 @@ app.post('/webhook', (req, res) => {
         // })
 
         console.log('!!!!!!!!!!!!!!! SPOTIFY API CALL HERE!!!!!!!!!')
+        const spotifyUserToken = spotifyApi._credentials.accessToken
 
         try {
           axios({
