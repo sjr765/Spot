@@ -3,6 +3,9 @@
 const {toneAnalyzer} = require('./toneAnalyzer')
 
 const PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN
+const SPOTIFY_CLIENT_ID = process.env.SPOTIFY_CLIENT_ID
+const SPOTIFY_CLIENT_SECRET = process.env.SPOTIFY_CLIENT_SECRET
+const SPOTIFY_REDIRECT_URL = 'http://www.m.me/SpotChatBot'
 
 const express = require('express'),
   bodyParser = require('body-parser'),
@@ -11,6 +14,9 @@ const express = require('express'),
 const request = require('request')
 
 app.listen(process.env.PORT || 1337, () => console.log('webhook is listening'))
+app.use(express.static(path.join(__dirname, '.', 'public')))
+
+app.use('/auth', require('./auth'))
 
 // Creates the endpoint for our webhook
 app.post('/webhook', (req, res) => {
