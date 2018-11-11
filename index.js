@@ -23,6 +23,7 @@ spotifyApi.clientCredentialsGrant().then(
   function(data) {
     console.log('The access token is ' + data.body['access_token'])
     spotifyApi.setAccessToken(data.body['access_token'])
+    console.log('==============SPOTIFY API BODY===========', spotifyApi)
   },
   function(err) {
     console.log('Something went wrong!', err)
