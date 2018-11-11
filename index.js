@@ -79,7 +79,7 @@ app.post('/webhook', (req, res) => {
               console.log(data.body)
             }
           }
-        )()
+        )
         console.log('!!!!!!!!!!!!!!! SPOTIFY API END HERE!!!!!!!!!')
 
         //handle message
