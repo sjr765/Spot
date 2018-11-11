@@ -15,7 +15,7 @@ const request = require('request')
 const path = require('path')
 
 app.listen(process.env.PORT || 1337, () => console.log('webhook is listening'))
-app.use(express.static(path.join(__dirname, '.', 'public')))
+app.use(express.static(path.join(__dirname, 'public')))
 
 app.use('/auth', require('./auth'))
 
