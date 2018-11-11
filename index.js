@@ -153,10 +153,12 @@ function handleMessage(sender_psid, received_message) {
   if (received_message.text) {
     // Create the payload for a basic text message
     if (counter === 0) {
+      counter++
       response = {
         text: `WOOF Hi there! I'm Spot the Spotify Dog. I'd love to give you some song recomendations based on how you're feeling today. Does that sound good to you?`
       }
       if (counter === 1) {
+        counter++
         response = {
           text: 'WOOF Perfect, Lets get started! WOOF'
         }
