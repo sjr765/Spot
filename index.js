@@ -207,7 +207,7 @@ function handleMessage(sender_psid, received_message) {
               params: {
                 limit: '1',
                 market: 'US',
-                seed_genres: 'pop',
+                seed_genres: finalGenre,
                 min_popularity: '20'
               }
             }).then(response => {
