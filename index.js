@@ -153,14 +153,13 @@ function handleMessage(sender_psid, received_message) {
   // Check if the message contains text
   if (received_message.text) {
     // Create the payload for a basic text message
-    if (counter === 0) {
+    if (counter === 0 || counter === 1) {
       response = {
         text: `WOOF Hi there! I'm Spot the Spotify Dog. I'd love to give you some song recomendations based on how you're feeling today. Does that sound good to you?`
       }
-      counter++
     }
-    if (counter === 1) {
-      if (received_message.text.toLowerCase().includes('yes')) {
+    if (counter === 2) {
+      if (received_message.text.includes('yes')) {
         response = {
           text: 'WOOF, hmmm.... lets start over!'
         }
@@ -170,39 +169,36 @@ function handleMessage(sender_psid, received_message) {
           text:
             'WOOF Perfect, Lets get started! WOOF Tell what your favorite personality trait is (about your self) WOOF'
         }
-        counter++
       }
     }
-    if (counter === 2) {
+    if (counter === 3) {
       userREsponse += received_message.text + ' '
       response = {
         text: ' WOOF How were you feeling when you woke up today?'
       }
-      counter++
     }
-    if (counter === 3) {
+    if (counter === 4) {
       userResponse += received_message.text + ' '
       response = {
         text:
           "WOOF, ok, WOOF and tell me your favorite or least favorite thing about what's happened since you woke up."
       }
-      counter++
     }
-    if (counter === 4) {
+    if (counter === 5) {
       userResponse += received_message.text + ' '
       response = {
         text: 'WOOF, ok I have your song ready! Are you ready WOOF?!'
       }
       counter++
     }
-    if (counter === 5) {
+    if (counter === 6) {
       response = {
         text: 'SPOTIFY SONG LINK!!!'
       }
       counter = 0
     }
   }
-
+  counter++
   // Sends the response message
   callSendAPI(sender_psid, response)
 }
