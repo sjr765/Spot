@@ -234,7 +234,7 @@ function handleMessage(sender_psid, received_message) {
       // console.log('!!!!!!!!!!!!!!! SPOTIFY API END HERE!!!!!!!!!')
       response = {
         text:
-          'WOOF, I hope you enjoy this: https://open.spotify.com/album/4F6GGyqtJoF4EOxDgsKzsB '
+          'WOOF, I hope you enjoy this: https://open.spotify.com/album/6NoBzYmh5gUusGPCfg0pct '
       }
       counter = -1
     }
