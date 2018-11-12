@@ -225,6 +225,7 @@ function handleMessage(sender_psid, received_message) {
       } catch (err) {
         console.error(err)
       }
+      console.log('HELLLOOOOOO AGAINNNNN =======', recommendedSong)
 
       // console.log('!!!!!!!!!!!!!!! SPOTIFY API END HERE!!!!!!!!!')
       response = {
