@@ -200,7 +200,7 @@ function handleMessage(sender_psid, received_message) {
             }
           })
           console.log(
-            '===== TEMPTONE.tone_ID  WITH FOR EACH=======',
+            '===== TEMPTONE.tone_ID  WITH FOR EACH========',
             tempTone.tone_id
           )
           // tone = toneAnalysis.document_tone.tones[0].tone_id
