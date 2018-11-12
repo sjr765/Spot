@@ -216,8 +216,12 @@ function handleMessage(sender_psid, received_message) {
             min_popularity: '20'
           }
         }).then(response => {
-          console.log('RESPONSE.DATA.TRACKS', response.data.tracks)
+          console.log(
+            'RESPONSE.DATA.TRACKS',
+            response.data.tracks[0].external_urls.spotify
+          )
           // console.log('*****WHOLE RESPONSE*****', response)
+          finalSong = response.data.tracks[0].external_urls.spotify
           const recommendedSongs = response.data.tracks
           console.log(recommendedSongs[0])
           res.json(recommendedSongs)
