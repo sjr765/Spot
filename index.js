@@ -115,7 +115,14 @@ app.get('/webhook', (req, res) => {
 })
 let counter = 0
 let userResponse = ''
-
+const genres = {
+  anger: hardcore,
+  fear: chill,
+  sadness: acoustic,
+  analytical: electronic,
+  confident: rock,
+  tentative: indie
+}
 // Handles messages events
 function handleMessage(sender_psid, received_message) {
   let response
@@ -176,7 +183,9 @@ function handleMessage(sender_psid, received_message) {
           console.log(error)
         } else {
           console.log('======== TONE ANALYSIS FROM WATSON ============')
-          console.log(JSON.stringify(toneAnalysis, null, 2))
+          console.log(JSON.stringify(toneAnalysis, null, 1))
+          // let tone = JSON.stringify(toneAnalysis.document_tone.)
+          // console.log(JSON.stringify)
           console.log('======== END OF TONE ANALYSIS FROM WATSON ============')
         }
       })
