@@ -194,9 +194,9 @@ function handleMessage(sender_psid, received_message) {
           let tones = toneAnalysis.document_tone.tones
           tones.forEach(indivdualTone => {
             if (indivdualTone.score > tempTone.score) {
-              console.log('TEMP TONE IS: ', tempTone)
               tempTone.score = indivdualTone.score
               tempTone.tone_id = indivdualTone.tone_id
+              console.log('TEMP TONE IS: ', tempTone)
             }
           })
           console.log(
@@ -238,7 +238,7 @@ function handleMessage(sender_psid, received_message) {
               // Sends the response message
               callSendAPI(sender_psid, response)
               // const recommendedSongs = response.data.tracks
-              // console.log(recommendedSongs[0])
+              console.log('COUNTER', counter)
             })
           } catch (err) {
             console.error(err)
