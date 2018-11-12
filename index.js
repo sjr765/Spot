@@ -152,12 +152,12 @@ function handleMessage(sender_psid, received_message) {
 
   // Check if the message contains text
   if (received_message.text) {
-    if (received_message.text === 'start over') {
-      response = {
-        test: 'WOOF! Ok! Lets start over!'
-      }
-      counter = -1
-    }
+    // if (received_message.text === 'start over') {
+    //   response = {
+    //     test: 'WOOF! Ok! Lets start over!'
+    //   }
+    //   counter = -1
+    // }
     // Create the payload for a basic text message
     if (counter === 0) {
       response = {
