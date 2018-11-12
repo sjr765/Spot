@@ -194,7 +194,9 @@ function handleMessage(sender_psid, received_message) {
               tone_id: ''
             }
             if (indivdualTone.score > tempTone.score) {
-              tempTone = indivdualTone
+              console.log('TEMP TONE IS: ', tempTone)
+              tempTone.score = indivdualTone.score
+              tempTone.tone_id = indivdualTone.tone_id
             }
             return tempTone.tone_id
           })
