@@ -199,7 +199,7 @@ function handleMessage(sender_psid, received_message) {
       response = {
         text: 'SPOTIFY SONG LINK!!!'
       }
-      counter = 1
+      counter = 0
     }
   }
 
