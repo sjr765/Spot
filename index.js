@@ -125,8 +125,7 @@ const genres = {
   joy: 'pop'
 }
 let tone = null
-let finalGenre = null
-// let recommendedSong = null
+let finalGenre = genres[tone]
 // Handles messages events
 function handleMessage(sender_psid, received_message) {
   let response
@@ -190,52 +189,46 @@ function handleMessage(sender_psid, received_message) {
           console.log(JSON.stringify(toneAnalysis, null, 1))
           tone = JSON.stringify(toneAnalysis.document_tone.tones[0].tone_id)
           console.log('TONE =====', tone, typeof tone)
-          console.log(genres.tone)
+          console.log(genres)
           console.log(tone)
-          console.log('MANUAL GENRES TEST =====', genres.joy)
-          finalGenre = genres[tone]
+          console.log('MANUAL GENRES TEST =====', genres[tone])
+          finalGenre = genres.tone
+          console.log('FINAL GENRE =======', finalGenre)
 
           console.log('======== END OF TONE ANALYSIS FROM WATSON ============')
         }
       })
-      console.log('FINAL GENRE =======', finalGenre)
-      const song = function() {
-        try {
-          axios({
-            method: 'get',
-            url: 'https://api.spotify.com/v1/recommendations',
-            headers: {
-              Authorization: 'Bearer ' + spotifyUserToken
-            },
-            params: {
-              limit: '1',
-              market: 'US',
-              seed_genres: genres.joy,
-              min_popularity: '20'
-            }
-          }).then(response => {
-            console.log('RESPONSE.DATA.TRACKS', response.data.tracks[0])
-            console.log(
-              '*****WHOLE RESPONSE*****',
-              response.data.tracks[0].external_urls.spotify
-            )
-            let recommendedSong = response.data.tracks[0].external_urls.spotify
-            console.log('HELLLOOOOOO =======', recommendedSong)
-            return recommendedSong
-          })
-        } catch (err) {
-          console.error(err)
-        }
-        console.log('HELLLOOOOOO AGAINNNNN =======', song())
+
+      try {
+        axios({
+          method: 'get',
+          url: 'https://api.spotify.com/v1/recommendations',
+          headers: {
+            Authorization: 'Bearer ' + spotifyUserToken
+          },
+          params: {
+            limit: '1',
+            market: 'US',
+            seed_genres: finalGenre,
+            min_popularity: '20'
+          }
+        }).then(response => {
+          console.log('RESPONSE.DATA.TRACKS', response.data.tracks)
+          // console.log('*****WHOLE RESPONSE*****', response)
+          const recommendedSongs = response.data.tracks
+          res.json(recommendedSongs)
+        })
+      } catch (err) {
+        console.error(err)
       }
+
       // console.log('!!!!!!!!!!!!!!! SPOTIFY API END HERE!!!!!!!!!')
       response = {
-        text: 'WOOF! I hope you like this: ' + song()
+        text: 'SPOTIFY SONG LINK!!!'
       }
       counter = -1
     }
   }
-
   console.log('====== COUNTER IS: ', counter)
   console.log('====== CONCATENATED REPONSE IS: ', userResponse)
   counter++
