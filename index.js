@@ -189,7 +189,6 @@ function handleMessage(sender_psid, received_message) {
       response = {
         text: 'WOOF, ok I have your song ready! Are you ready WOOF?!'
       }
-      counter++
     }
     if (counter === 5) {
       response = {
