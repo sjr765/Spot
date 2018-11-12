@@ -80,30 +80,30 @@ app.post('/webhook', (req, res) => {
         console.log('!!!!!!!!!!!!!!! SPOTIFY API CALL HERE!!!!!!!!!')
         const spotifyUserToken = spotifyApi._credentials.accessToken
 
-        try {
-          axios({
-            method: 'get',
-            url: 'https://api.spotify.com/v1/recommendations',
-            headers: {
-              Authorization: 'Bearer ' + spotifyUserToken
-            },
-            params: {
-              limit: '1',
-              market: 'US',
-              seed_genres: 'funk',
-              min_popularity: '20'
-            }
-          }).then(response => {
-            console.log('RESPONSE.DATA.TRACKS', response.data.tracks)
-            // console.log('*****WHOLE RESPONSE*****', response)
-            const recommendedSongs = response.data.tracks
-            res.json(recommendedSongs)
-          })
-        } catch (err) {
-          console.error(err)
-        }
+        // try {
+        //   axios({
+        //     method: 'get',
+        //     url: 'https://api.spotify.com/v1/recommendations',
+        //     headers: {
+        //       Authorization: 'Bearer ' + spotifyUserToken
+        //     },
+        //     params: {
+        //       limit: '1',
+        //       market: 'US',
+        //       seed_genres: 'funk',
+        //       min_popularity: '20'
+        //     }
+        //   }).then(response => {
+        //     console.log('RESPONSE.DATA.TRACKS', response.data.tracks)
+        //     // console.log('*****WHOLE RESPONSE*****', response)
+        //     const recommendedSongs = response.data.tracks
+        //     res.json(recommendedSongs)
+        //   })
+        // } catch (err) {
+        //   console.error(err)
+        // }
 
-        console.log('!!!!!!!!!!!!!!! SPOTIFY API END HERE!!!!!!!!!')
+        // console.log('!!!!!!!!!!!!!!! SPOTIFY API END HERE!!!!!!!!!')
 
         //handle message
         handleMessage(sender_psid, webhook_event.message)
