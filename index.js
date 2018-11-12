@@ -173,7 +173,6 @@ function handleMessage(sender_psid, received_message) {
     }
     if (counter === 5) {
       console.log('!!!!!!!!!!!!!!! SPOTIFY API CALL HERE!!!!!!!!!')
-      const spotifyUserToken = spotifyApi._credentials.accessToken
       const chatBotText = userResponse
 
       const toneParams = {
@@ -201,6 +200,7 @@ function handleMessage(sender_psid, received_message) {
       })
 
       try {
+        const spotifyUserToken = spotifyApi._credentials.accessToken
         axios({
           method: 'get',
           url: 'https://api.spotify.com/v1/recommendations',
