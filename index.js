@@ -165,10 +165,7 @@ function handleMessage(sender_psid, received_message) {
       }
     }
     if (counter === 1) {
-      if (
-        !received_message.text.toLowerCase().includes('yes') ||
-        !received_message.text.toLowerCase().includes('ok')
-      ) {
+      if (!received_message.text.toLowerCase().includes('yes')) {
         response = {
           text: 'WOOF, hmmm.... lets start over!'
         }
