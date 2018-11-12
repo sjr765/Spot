@@ -57,8 +57,6 @@ app.post('/webhook', (req, res) => {
       if (webhook_event.message) {
         //WATSON ANALYSIS
 
-        // const chatBotText = webhook_event.message.text
-
         // const toneParams = {
         //   tone_input: {text: chatBotText},
         //   content_type: 'application/json',
@@ -143,21 +141,21 @@ function handleMessage(sender_psid, received_message) {
       }
     }
     if (counter === 2) {
-      userResponse += received_message.text + ' '
+      userResponse += received_message.text + '. '
       response = {
         text:
           ' WOOF okay, and how were you feeling when you woke up today? Woof'
       }
     }
     if (counter === 3) {
-      userResponse += received_message.text + ' '
+      userResponse += received_message.text + '. '
       response = {
         text:
           "WOOF, ok, WOOF and tell me your favorite or least favorite thing about what's happened since you woke up."
       }
     }
     if (counter === 4) {
-      userResponse += received_message.text + ' '
+      userResponse += received_message.text + '. '
       response = {
         text: 'WOOF, ok I have your song ready! Are you ready WOOF?!'
       }
@@ -165,6 +163,23 @@ function handleMessage(sender_psid, received_message) {
     if (counter === 5) {
       console.log('!!!!!!!!!!!!!!! SPOTIFY API CALL HERE!!!!!!!!!')
       const spotifyUserToken = spotifyApi._credentials.accessToken
+      const chatBotText = userResponse
+
+      const toneParams = {
+        tone_input: {text: chatBotText},
+        content_type: 'application/json',
+        sentences: false
+      }
+
+      toneAnalyzer.tone(toneParams, function(error, toneAnalysis) {
+        if (error) {
+          console.log(error)
+        } else {
+          console.log('======== TONE ANALYSIS FROM WATSON ============')
+          console.log(JSON.stringify(toneAnalysis, null, 2))
+          console.log('======== END OF TONE ANALYSIS FROM WATSON ============')
+        }
+      })
 
       try {
         axios({
@@ -247,3 +262,21 @@ function callSendAPI(sender_psid, response) {
     }
   )
 }
+
+const {toneAnalyzer} = require('./toneAnalyzer')
+
+const toneParams = {
+  tone_input: {text: chatBotText},
+  content_type: 'application/json',
+  sentences: false
+}
+
+toneAnalyzer.tone(toneParams, function(error, toneAnalysis) {
+  if (error) {
+    console.log(error)
+  } else {
+    console.log('======== TONE ANALYSIS FROM WATSON ============')
+    console.log(JSON.stringify(toneAnalysis, null, 2))
+    console.log('======== END OF TONE ANALYSIS FROM WATSON ============')
+  }
+})
