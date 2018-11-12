@@ -217,6 +217,10 @@ function handleMessage(sender_psid, received_message) {
               )
               // console.log('*****WHOLE RESPONSE*****', response)
               finalSong = response.data.tracks[0].external_urls.spotify
+              console.log(
+                '======finalSong INSIDE of Spotify call=======',
+                finalSong
+              )
               const recommendedSongs = response.data.tracks
               console.log(recommendedSongs[0])
               res.json(recommendedSongs)
@@ -230,9 +234,9 @@ function handleMessage(sender_psid, received_message) {
       })
 
       // console.log('!!!!!!!!!!!!!!! SPOTIFY API END HERE!!!!!!!!!')
+      console.log('======finalSong OUTSIDE of Spotify call=======', finalSong)
       response = {
-        text:
-          'WOOF, I hope you enjoy this: https://open.spotify.com/album/6NoBzYmh5gUusGPCfg0pct '
+        text: 'WOOF, I hope you enjoy this: ' + finalSong
       }
       counter = -1
     }
