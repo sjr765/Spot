@@ -157,23 +157,28 @@ function handleMessage(sender_psid, received_message) {
       response = {
         text: `WOOF Hi there! I'm Spot the Spotify Dog. I'd love to give you some song recomendations based on how you're feeling today. Does that sound good to you?`
       }
+      counter++
     }
     if (counter === 1) {
-      if (received_message.text !== 'yes') {
+      if (received_message.text.toLowerCase().includes('yes')) {
         response = {
           text: 'WOOF, hmmm.... lets start over!'
         }
         counter = 0
       } else {
         response = {
-          text: 'WOOF Perfect, Lets get started! WOOF'
+          text:
+            'WOOF Perfect, Lets get started! WOOF Tell what your favorite personality trait is (about your self) WOOF'
         }
+        counter++
       }
     }
     if (counter === 2) {
+      userREsponse += received_message.text + ' '
       response = {
         text: ' WOOF How were you feeling when you woke up today?'
       }
+      counter++
     }
     if (counter === 3) {
       userResponse += received_message.text + ' '
@@ -181,22 +186,22 @@ function handleMessage(sender_psid, received_message) {
         text:
           "WOOF, ok, WOOF and tell me your favorite or least favorite thing about what's happened since you woke up."
       }
+      counter++
     }
     if (counter === 4) {
       userResponse += received_message.text + ' '
       response = {
         text: 'WOOF, ok I have your song ready! Are you ready WOOF?!'
       }
+      counter++
     }
     if (counter === 5) {
-      userResponse += received_message.text + ' '
       response = {
         text: 'SPOTIFY SONG LINK!!!'
       }
       counter = 0
     }
   }
-  counter++
 
   // Sends the response message
   callSendAPI(sender_psid, response)
