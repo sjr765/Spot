@@ -212,7 +212,7 @@ function handleMessage(sender_psid, received_message) {
           params: {
             limit: '1',
             market: 'US',
-            seed_genres: finalGenre,
+            seed_genres: 'acoustic',
             min_popularity: '20'
           }
         }).then(response => {
