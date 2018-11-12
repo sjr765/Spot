@@ -199,7 +199,7 @@ function handleMessage(sender_psid, received_message) {
         }
       })
       console.log('FINAL GENRE =======', finalGenre)
-      const song = (function() {
+      const song = function() {
         try {
           axios({
             method: 'get',
@@ -226,16 +226,16 @@ function handleMessage(sender_psid, received_message) {
         } catch (err) {
           console.error(err)
         }
-        console.log('HELLLOOOOOO AGAINNNNN =======', recommendedSong)
-
-        // console.log('!!!!!!!!!!!!!!! SPOTIFY API END HERE!!!!!!!!!')
-        response = {
-          text: 'WOOF! I hope you like this: ' + song
-        }
-        counter = -1
-      })()
+        console.log('HELLLOOOOOO AGAINNNNN =======', song())
+      }
+      // console.log('!!!!!!!!!!!!!!! SPOTIFY API END HERE!!!!!!!!!')
+      response = {
+        text: 'WOOF! I hope you like this: ' + song()
+      }
+      counter = -1
     }
   }
+
   console.log('====== COUNTER IS: ', counter)
   console.log('====== CONCATENATED REPONSE IS: ', userResponse)
   counter++
