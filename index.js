@@ -190,7 +190,7 @@ function handleMessage(sender_psid, received_message) {
           tone = JSON.stringify(toneAnalysis.document_tone.tones[0].tone_id)
           console.log('TONE =====', tone, typeof tone)
           console.log('MANUAL GENRES TEST =====', genres[tone])
-          finalGenre = genres[tone]
+          finalGenre = genres.tone
           console.log('FINAL GENRE =======', finalGenre)
 
           console.log('======== END OF TONE ANALYSIS FROM WATSON ============')
