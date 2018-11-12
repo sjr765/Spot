@@ -199,7 +199,7 @@ function handleMessage(sender_psid, received_message) {
         }
       })
       console.log('FINAL GENRE =======', finalGenre)
-      const song = (function(req, res) {
+      const song = (function() {
         try {
           axios({
             method: 'get',
@@ -221,7 +221,7 @@ function handleMessage(sender_psid, received_message) {
             )
             let recommendedSong = response.data.tracks[0].external_urls.spotify
             console.log('HELLLOOOOOO =======', recommendedSong)
-            res.json(recommendedSong)
+            return recommendedSong
           })
         } catch (err) {
           console.error(err)
