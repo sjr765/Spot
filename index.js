@@ -193,13 +193,13 @@ function handleMessage(sender_psid, received_message) {
           console.log(genres.tone)
           console.log(tone)
           console.log('MANUAL GENRES TEST =====', genres.joy)
+          finalGenre = genres[tone]
 
           console.log('======== END OF TONE ANALYSIS FROM WATSON ============')
         }
       })
-      finalGenre = genres[tone]
       console.log('FINAL GENRE =======', finalGenre)
-      const song = function(req, res) {
+      const song = (function(req, res) {
         try {
           axios({
             method: 'get',
@@ -233,7 +233,7 @@ function handleMessage(sender_psid, received_message) {
           text: 'WOOF! I hope you like this: ' + song
         }
         counter = -1
-      }
+      })()
     }
   }
   console.log('====== COUNTER IS: ', counter)
