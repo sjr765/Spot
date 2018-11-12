@@ -164,11 +164,10 @@ function handleMessage(sender_psid, received_message) {
       //     text: 'WOOF, hmmm.... lets start over!'
       //   }
       //   counter = -1
-      } else {
-        response = {
-          text:
-            'WOOF Perfect, Lets get started! WOOF Tell what your favorite personality trait is (about your self) WOOF'
-        }
+      // }
+      response = {
+        text:
+          'WOOF Perfect, Lets get started! WOOF Tell what your favorite personality trait is (about your self) WOOF'
       }
     }
     if (counter === 2) {
