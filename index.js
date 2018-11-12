@@ -153,8 +153,8 @@ function handleMessage(sender_psid, received_message) {
   // Check if the message contains text
   if (received_message.text) {
     if (received_message.text === 'start over') {
-      reponse = {
-        test: 'Ok! Lets start over!'
+      response = {
+        test: 'WOOF! Ok! Lets start over!'
       }
       counter = -1
     }
