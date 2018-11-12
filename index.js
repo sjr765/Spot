@@ -192,7 +192,7 @@ function handleMessage(sender_psid, received_message) {
           console.log(genres)
           console.log(tone)
           console.log('MANUAL GENRES TEST =====', genres.joy)
-          finalGenre = genres[tone]
+          genres.tone = finalGenre = genres[tone]
           console.log('FINAL GENRE =======', finalGenre)
 
           console.log('======== END OF TONE ANALYSIS FROM WATSON ============')
@@ -209,7 +209,7 @@ function handleMessage(sender_psid, received_message) {
           params: {
             limit: '1',
             market: 'US',
-            seed_genres: finalGenre,
+            seed_genres: genres.joy,
             min_popularity: '20'
           }
         }).then(response => {
