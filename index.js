@@ -201,6 +201,8 @@ function handleMessage(sender_psid, received_message) {
 
       try {
         const spotifyUserToken = spotifyApi._credentials.accessToken
+        const genre = finalGenre
+        console.log('HELLLLLO GENRE ======' + genre)
         axios({
           method: 'get',
           url: 'https://api.spotify.com/v1/recommendations',
