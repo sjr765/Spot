@@ -190,12 +190,12 @@ function handleMessage(sender_psid, received_message) {
             console.log('======== TONE ANALYSIS FROM WATSON ============')
             console.log(JSON.stringify(toneAnalysis, null, 1))
             tone = toneAnalysis.document_tone.tones[0].tone_id
-            console.log('TONE =====', tone, typeof tone)
-            console.log(genres)
-            console.log(tone)
-            console.log('MANUAL GENRES TEST =====', genres[tone])
+            // console.log('TONE =====', tone, typeof tone)
+            // console.log(genres)
+            // console.log(tone)
+            // console.log('MANUAL GENRES TEST =====', genres[tone])
             finalGenre = genres[tone]
-            console.log('FINAL GENRE =======', finalGenre)
+            // console.log('FINAL GENRE =======', finalGenre)
 
             console.log(
               '======== END OF TONE ANALYSIS FROM WATSON ============'
@@ -213,7 +213,7 @@ function handleMessage(sender_psid, received_message) {
           params: {
             limit: '1',
             market: 'US',
-            seed_genres: 'acoustic',
+            seed_genres: 'pop',
             min_popularity: '20'
           }
         }).then(response => {
@@ -233,7 +233,7 @@ function handleMessage(sender_psid, received_message) {
 
       // console.log('!!!!!!!!!!!!!!! SPOTIFY API END HERE!!!!!!!!!')
       response = {
-        text: 'SPOTIFY SONG LINK!!! ' + finalSong
+        text: 'WOOF, I hope you enjoy this: '
       }
       counter = -1
     }
