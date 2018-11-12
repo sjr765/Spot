@@ -189,6 +189,7 @@ function handleMessage(sender_psid, received_message) {
           console.log(JSON.stringify(toneAnalysis, null, 1))
           let tone = JSON.stringify(toneAnalysis.document_tone.tones[0].tone_id)
           console.log('TONE =====', tone)
+          console.log('MANUAL GENRES TEST =====', genres['joy'])
           let finalGenre = genres[tone]
           console.log('FINAL GENRE =======', finalGenre)
 
