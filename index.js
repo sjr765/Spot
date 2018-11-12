@@ -125,7 +125,7 @@ const genres = {
   joy: 'pop'
 }
 
-let finalGenre = null
+// let finalGenre = null
 // Handles messages events
 function handleMessage(sender_psid, received_message) {
   let response
@@ -188,7 +188,8 @@ function handleMessage(sender_psid, received_message) {
           console.log('======== TONE ANALYSIS FROM WATSON ============')
           console.log(JSON.stringify(toneAnalysis, null, 1))
           let tone = JSON.stringify(toneAnalysis.document_tone.tones[0].tone_id)
-          finalGenre = genres[tone]
+          console.log('TONE =====', tone)
+          let finalGenre = genres[tone]
           console.log('FINAL GENRE =======', finalGenre)
 
           console.log('======== END OF TONE ANALYSIS FROM WATSON ============')
