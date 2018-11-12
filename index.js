@@ -159,11 +159,11 @@ function handleMessage(sender_psid, received_message) {
       }
     }
     if (counter === 1) {
-      if (received_message.text.includes('yes')) {
-        response = {
-          text: 'WOOF, hmmm.... lets start over!'
-        }
-        counter = -1
+      // if (!received_message.text.toLowerCase().includes('yes')) {
+      //   response = {
+      //     text: 'WOOF, hmmm.... lets start over!'
+      //   }
+      //   counter = -1
       } else {
         response = {
           text:
@@ -174,7 +174,8 @@ function handleMessage(sender_psid, received_message) {
     if (counter === 2) {
       userResponse += received_message.text + ' '
       response = {
-        text: ' WOOF How were you feeling when you woke up today?'
+        text:
+          ' WOOF okay, and how were you feeling when you woke up today? Woof'
       }
     }
     if (counter === 3) {
