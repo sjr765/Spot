@@ -173,63 +173,61 @@ function handleMessage(sender_psid, received_message) {
     }
     if (counter === 5) {
       console.log('!!!!!!!!!!!!!!! SPOTIFY API CALL HERE!!!!!!!!!')
+      const chatBotText = userResponse
 
-      try {
-        const chatBotText = userResponse
-
-        const toneParams = {
-          tone_input: {text: chatBotText},
-          content_type: 'application/json',
-          sentences: false
-        }
-
-        toneAnalyzer.tone(toneParams, function(error, toneAnalysis) {
-          if (error) {
-            console.log(error)
-          } else {
-            console.log('======== TONE ANALYSIS FROM WATSON ============')
-            console.log(JSON.stringify(toneAnalysis, null, 1))
-            tone = toneAnalysis.document_tone.tones[0].tone_id
-            // console.log('TONE =====', tone, typeof tone)
-            // console.log(genres)
-            // console.log(tone)
-            // console.log('MANUAL GENRES TEST =====', genres[tone])
-            finalGenre = genres[tone]
-            // console.log('FINAL GENRE =======', finalGenre)
-
-            console.log(
-              '======== END OF TONE ANALYSIS FROM WATSON ============'
-            )
-          }
-        })
-        const spotifyUserToken = spotifyApi._credentials.accessToken
-        console.log('HELLLLLO GENRE ======' + finalGenre)
-        axios({
-          method: 'get',
-          url: 'https://api.spotify.com/v1/recommendations',
-          headers: {
-            Authorization: 'Bearer ' + spotifyUserToken
-          },
-          params: {
-            limit: '1',
-            market: 'US',
-            seed_genres: 'pop',
-            min_popularity: '20'
-          }
-        }).then(response => {
-          console.log(
-            'RESPONSE.DATA.TRACKS',
-            response.data.tracks[0].external_urls.spotify
-          )
-          // console.log('*****WHOLE RESPONSE*****', response)
-          finalSong = response.data.tracks[0].external_urls.spotify
-          const recommendedSongs = response.data.tracks
-          console.log(recommendedSongs[0])
-          res.json(recommendedSongs)
-        })
-      } catch (err) {
-        console.error(err)
+      const toneParams = {
+        tone_input: {text: chatBotText},
+        content_type: 'application/json',
+        sentences: false
       }
+
+      toneAnalyzer.tone(toneParams, function(error, toneAnalysis) {
+        if (error) {
+          console.log(error)
+        } else {
+          console.log('======== TONE ANALYSIS FROM WATSON ============')
+          console.log(JSON.stringify(toneAnalysis, null, 1))
+          tone = toneAnalysis.document_tone.tones[0].tone_id
+          // console.log('TONE =====', tone, typeof tone)
+          // console.log(genres)
+          // console.log(tone)
+          // console.log('MANUAL GENRES TEST =====', genres[tone])
+          finalGenre = genres[tone]
+          // console.log('FINAL GENRE =======', finalGenre)
+
+          try {
+            const spotifyUserToken = spotifyApi._credentials.accessToken
+            console.log('HELLLLLO GENRE ======' + finalGenre)
+            axios({
+              method: 'get',
+              url: 'https://api.spotify.com/v1/recommendations',
+              headers: {
+                Authorization: 'Bearer ' + spotifyUserToken
+              },
+              params: {
+                limit: '1',
+                market: 'US',
+                seed_genres: 'pop',
+                min_popularity: '20'
+              }
+            }).then(response => {
+              console.log(
+                'RESPONSE.DATA.TRACKS',
+                response.data.tracks[0].external_urls.spotify
+              )
+              // console.log('*****WHOLE RESPONSE*****', response)
+              finalSong = response.data.tracks[0].external_urls.spotify
+              const recommendedSongs = response.data.tracks
+              console.log(recommendedSongs[0])
+              res.json(recommendedSongs)
+            })
+          } catch (err) {
+            console.error(err)
+          }
+
+          console.log('======== END OF TONE ANALYSIS FROM WATSON ============')
+        }
+      })
 
       // console.log('!!!!!!!!!!!!!!! SPOTIFY API END HERE!!!!!!!!!')
       response = {
