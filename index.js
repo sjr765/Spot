@@ -193,13 +193,12 @@ function handleMessage(sender_psid, received_message) {
           console.log(genres.tone)
           console.log(tone)
           console.log('MANUAL GENRES TEST =====', genres.joy)
-          finalGenre = genres[tone]
-          console.log('FINAL GENRE =======', finalGenre)
 
           console.log('======== END OF TONE ANALYSIS FROM WATSON ============')
         }
       })
-
+      finalGenre = genres[tone]
+      console.log('FINAL GENRE =======', finalGenre)
       try {
         axios({
           method: 'get',
@@ -220,6 +219,7 @@ function handleMessage(sender_psid, received_message) {
             response.data.tracks[0].external_urls.spotify
           )
           recommendedSong = response.data.tracks[0].external_urls.spotify
+          console.log('HELLLOOOOOO =======', recommendedSong)
           // res.json(recommendedSong)
         })
       } catch (err) {
