@@ -126,6 +126,7 @@ const genres = {
 }
 let tone = null
 let finalGenre = null
+let recommendedSong = null
 // Handles messages events
 function handleMessage(sender_psid, received_message) {
   let response
@@ -199,37 +200,35 @@ function handleMessage(sender_psid, received_message) {
         }
       })
 
-      const spotifySong = async function(req, res, next) {
-        try {
-          await axios({
-            method: 'get',
-            url: 'https://api.spotify.com/v1/recommendations',
-            headers: {
-              Authorization: 'Bearer ' + spotifyUserToken
-            },
-            params: {
-              limit: '1',
-              market: 'US',
-              seed_genres: genres.joy,
-              min_popularity: '20'
-            }
-          }).then(response => {
-            console.log('RESPONSE.DATA.TRACKS', response.data.tracks[0])
-            console.log(
-              '*****WHOLE RESPONSE*****',
-              response.data.tracks[0].external_urls.spotify
-            )
-            let recommendedSong = response.data.tracks[0].external_urls.spotify
-            res.json(recommendedSong)
-          })
-        } catch (err) {
-          console.error(err)
-        }
+      try {
+        axios({
+          method: 'get',
+          url: 'https://api.spotify.com/v1/recommendations',
+          headers: {
+            Authorization: 'Bearer ' + spotifyUserToken
+          },
+          params: {
+            limit: '1',
+            market: 'US',
+            seed_genres: genres.joy,
+            min_popularity: '20'
+          }
+        }).then(response => {
+          console.log('RESPONSE.DATA.TRACKS', response.data.tracks[0])
+          console.log(
+            '*****WHOLE RESPONSE*****',
+            response.data.tracks[0].external_urls.spotify
+          )
+          recommendedSong = response.data.tracks[0].external_urls.spotify
+          res.json(recommendedSong)
+        })
+      } catch (err) {
+        console.error(err)
       }
 
       // console.log('!!!!!!!!!!!!!!! SPOTIFY API END HERE!!!!!!!!!')
       response = {
-        text: 'WOOF! I hope you like this: ' + spotifySong.data
+        text: 'WOOF! I hope you like this: ' + recommendedSong
       }
       counter = -1
     }
