@@ -198,7 +198,7 @@ function handleMessage(sender_psid, received_message) {
           console.log('======== END OF TONE ANALYSIS FROM WATSON ============')
         }
       })
-
+      console.log(finalGenre, '<<<<<<<<<<<<< FINAL GENRE')
       try {
         const spotifyUserToken = spotifyApi._credentials.accessToken
         console.log('HELLLLLO GENRE ======' + finalGenre)
