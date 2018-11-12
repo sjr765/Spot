@@ -229,7 +229,7 @@ function handleMessage(sender_psid, received_message) {
 
       // console.log('!!!!!!!!!!!!!!! SPOTIFY API END HERE!!!!!!!!!')
       response = {
-        text: 'WOOF! I hope you like this: ' + spotifySong
+        text: 'WOOF! I hope you like this: ' + spotifySong.data
       }
       counter = -1
     }
