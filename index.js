@@ -214,9 +214,12 @@ function handleMessage(sender_psid, received_message) {
             min_popularity: '20'
           }
         }).then(response => {
-          console.log('RESPONSE.DATA.TRACKS', response.data.tracks)
-          // console.log('*****WHOLE RESPONSE*****', response)
-          recommendedSong = response.data.tracks[0].uri
+          console.log('RESPONSE.DATA.TRACKS', response.data.tracks[0])
+          console.log(
+            '*****WHOLE RESPONSE*****',
+            response.data.tracks[0].external_urls
+          )
+          recommendedSong = response.data.tracks[0].external_urls.spotify
           res.json(recommendedSong)
         })
       } catch (err) {
