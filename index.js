@@ -144,6 +144,7 @@ app.get('/webhook', (req, res) => {
   }
 })
 let counter = 0
+let userResponse = ''
 
 // Handles messages events
 function handleMessage(sender_psid, received_message) {
@@ -158,39 +159,41 @@ function handleMessage(sender_psid, received_message) {
       }
     }
     if (counter === 1) {
-      response = {
-        text: 'WOOF Perfect, Lets get started! WOOF'
-      }
-    }
-  } else if (received_message.attachments) {
-    // Get the URL of the message attachment
-    let attachment_url = received_message.attachments[0].payload.url
-    response = {
-      attachment: {
-        type: 'template',
-        payload: {
-          template_type: 'generic',
-          elements: [
-            {
-              title: 'Is this the right picture?',
-              subtitle: 'Tap a button to answer.',
-              image_url: attachment_url,
-              buttons: [
-                {
-                  type: 'postback',
-                  title: 'Yes!',
-                  payload: 'yes'
-                },
-                {
-                  type: 'postback',
-                  title: 'No!',
-                  payload: 'no'
-                }
-              ]
-            }
-          ]
+      if (received_message.text !== 'yes') {
+        response = {
+          text: 'WOOF, hmmm.... lets start over!'
+        }
+        counter = 0
+      } else {
+        response = {
+          text: 'WOOF Perfect, Lets get started! WOOF'
         }
       }
+    }
+    if (counter === 2) {
+      response = {
+        text: ' WOOF How were you feeling when you woke up today?'
+      }
+    }
+    if (counter === 3) {
+      userResponse += received_message.text + ' '
+      response = {
+        text:
+          "WOOF, ok, WOOF and tell me your favorite or least favorite thing about what's happened since you woke up."
+      }
+    }
+    if (counter === 4) {
+      userResponse += received_message.text + ' '
+      response = {
+        text: 'WOOF, ok I have your song ready! Are you ready WOOF?!'
+      }
+    }
+    if (counter === 5) {
+      userResponse += received_message.text + ' '
+      response = {
+        text: 'SPOTIFY SONG LINK!!!'
+      }
+      counter = 0
     }
   }
   counter++
