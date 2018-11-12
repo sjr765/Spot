@@ -130,73 +130,72 @@ function handleMessage(sender_psid, received_message) {
         text: `WOOF Hi there! I'm Spot the Spotify Dog. I'd love to give you some song recomendations based on how you're feeling today. Does that sound good to you?`
       }
     }
-    // if (counter === 1) {
-    //   if (!received_message.text.toLowerCase().includes('yes')) {
-    //     response = {
-    //       text: 'WOOF, hmmm.... lets start over!'
-    //     }
-    counter = -1
-  } else {
-    response = {
-      text:
-        'WOOF Perfect, Lets get started! WOOF Tell what your favorite personality trait is (about your self) WOOF'
+    if (counter === 1) {
+      // if (!received_message.text.toLowerCase().includes('yes')) {
+      //   response = {
+      //     text: 'WOOF, hmmm.... lets start over!'
+      //   }
+      //   counter = -1
+      // } else {
+      response = {
+        text:
+          'WOOF Perfect, Lets get started! WOOF Tell what your favorite personality trait is (about your self) WOOF'
+      }
+    }
+    if (counter === 2) {
+      userResponse += received_message.text + ' '
+      response = {
+        text:
+          ' WOOF okay, and how were you feeling when you woke up today? Woof'
+      }
+    }
+    if (counter === 3) {
+      userResponse += received_message.text + ' '
+      response = {
+        text:
+          "WOOF, ok, WOOF and tell me your favorite or least favorite thing about what's happened since you woke up."
+      }
+    }
+    if (counter === 4) {
+      userResponse += received_message.text + ' '
+      response = {
+        text: 'WOOF, ok I have your song ready! Are you ready WOOF?!'
+      }
+    }
+    if (counter === 5) {
+      console.log('!!!!!!!!!!!!!!! SPOTIFY API CALL HERE!!!!!!!!!')
+      const spotifyUserToken = spotifyApi._credentials.accessToken
+
+      try {
+        axios({
+          method: 'get',
+          url: 'https://api.spotify.com/v1/recommendations',
+          headers: {
+            Authorization: 'Bearer ' + spotifyUserToken
+          },
+          params: {
+            limit: '1',
+            market: 'US',
+            seed_genres: 'funk',
+            min_popularity: '20'
+          }
+        }).then(response => {
+          console.log('RESPONSE.DATA.TRACKS', response.data.tracks)
+          // console.log('*****WHOLE RESPONSE*****', response)
+          const recommendedSongs = response.data.tracks
+          res.json(recommendedSongs)
+        })
+      } catch (err) {
+        console.error(err)
+      }
+
+      // console.log('!!!!!!!!!!!!!!! SPOTIFY API END HERE!!!!!!!!!')
+      response = {
+        text: 'SPOTIFY SONG LINK!!!'
+      }
+      counter = -1
     }
   }
-
-  if (counter === 2) {
-    userResponse += received_message.text + ' '
-    response = {
-      text: ' WOOF okay, and how were you feeling when you woke up today? Woof'
-    }
-  }
-  if (counter === 3) {
-    userResponse += received_message.text + ' '
-    response = {
-      text:
-        "WOOF, ok, WOOF and tell me your favorite or least favorite thing about what's happened since you woke up."
-    }
-  }
-  if (counter === 4) {
-    userResponse += received_message.text + ' '
-    response = {
-      text: 'WOOF, ok I have your song ready! Are you ready WOOF?!'
-    }
-  }
-  if (counter === 5) {
-    console.log('!!!!!!!!!!!!!!! SPOTIFY API CALL HERE!!!!!!!!!')
-
-    const spotifyUserToken = spotifyApi._credentials.accessToken
-
-    try {
-      axios({
-        method: 'get',
-        url: 'https://api.spotify.com/v1/recommendations',
-        headers: {
-          Authorization: 'Bearer ' + spotifyUserToken
-        },
-        params: {
-          limit: '1',
-          market: 'US',
-          seed_genres: 'funk',
-          min_popularity: '20'
-        }
-      }).then(response => {
-        console.log('RESPONSE.DATA.TRACKS', response.data.tracks)
-        // console.log('*****WHOLE RESPONSE*****', response)
-        const recommendedSongs = response.data.tracks
-        res.json(recommendedSongs)
-      })
-    } catch (err) {
-      console.error(err)
-    }
-
-    // console.log('!!!!!!!!!!!!!!! SPOTIFY API END HERE!!!!!!!!!')
-    response = {
-      text: 'SPOTIFY SONG LINK!!!'
-    }
-    counter = -1
-  }
-
   console.log('====== COUNTER IS: ', counter)
   console.log('====== CONCATENATED REPONSE IS: ', userResponse)
   counter++
