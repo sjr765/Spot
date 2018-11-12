@@ -221,9 +221,23 @@ function handleMessage(sender_psid, received_message) {
                 '======finalSong INSIDE of Spotify call=======',
                 finalSong
               )
-              const recommendedSongs = response.data.tracks
-              console.log(recommendedSongs[0])
-              res.json(recommendedSongs)
+
+              console.log(
+                '======finalSong OUTSIDE of Spotify call=======',
+                finalSong
+              )
+              response = {
+                text: 'WOOF, I hope you enjoy this: ' + finalSong
+              }
+              counter = -1
+
+              console.log('====== COUNTER IS: ', counter)
+              console.log('====== CONCATENATED REPONSE IS: ', userResponse)
+              counter++
+              // Sends the response message
+              callSendAPI(sender_psid, response)
+              // const recommendedSongs = response.data.tracks
+              // console.log(recommendedSongs[0])
             })
           } catch (err) {
             console.error(err)
@@ -234,15 +248,15 @@ function handleMessage(sender_psid, received_message) {
       })
 
       // console.log('!!!!!!!!!!!!!!! SPOTIFY API END HERE!!!!!!!!!')
-      console.log('======finalSong OUTSIDE of Spotify call=======', finalSong)
-      response = {
-        text: 'WOOF, I hope you enjoy this: ' + finalSong
-      }
-      counter = -1
-    }
-  }
-  console.log('====== COUNTER IS: ', counter)
-  console.log('====== CONCATENATED REPONSE IS: ', userResponse)
+  //     console.log('======finalSong OUTSIDE of Spotify call=======', finalSong)
+  //     response = {
+  //       text: 'WOOF, I hope you enjoy this: ' + finalSong
+  //     }
+  //     counter = -1
+  //   }
+  // }
+  // console.log('====== COUNTER IS: ', counter)
+  // console.log('====== CONCATENATED REPONSE IS: ', userResponse)
   counter++
   // Sends the response message
   callSendAPI(sender_psid, response)
