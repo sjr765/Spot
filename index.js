@@ -187,23 +187,25 @@ function handleMessage(sender_psid, received_message) {
         } else {
           console.log('======== TONE ANALYSIS FROM WATSON ============')
           console.log(JSON.stringify(toneAnalysis, null, 1))
+          let tempTone = {
+            score: 0,
+            tone_id: ''
+          }
           let tones = toneAnalysis.document_tone.tones
-          tone = tones.forEach(indivdualTone => {
-            let tempTone = {
-              score: 0,
-              tone_id: ''
-            }
+          tones.forEach(indivdualTone => {
             if (indivdualTone.score > tempTone.score) {
               console.log('TEMP TONE IS: ', tempTone)
               tempTone.score = indivdualTone.score
               tempTone.tone_id = indivdualTone.tone_id
             }
-            return tempTone.tone_id
           })
-          console.log('===== TONE WITH FOR EACH=======', tone)
+          console.log(
+            '===== TEMPTONE.tone_ID  WITH FOR EACH=======',
+            tempTone.tone_id
+          )
           // tone = toneAnalysis.document_tone.tones[0].tone_id
 
-          finalGenre = genres[tone]
+          finalGenre = genres[tempTone.tone_id]
 
           try {
             const spotifyUserToken = spotifyApi._credentials.accessToken
