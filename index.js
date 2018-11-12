@@ -243,6 +243,8 @@ function handleMessage(sender_psid, received_message) {
             console.error(err)
           }
 
+          console.log('test')
+
           console.log('======== END OF TONE ANALYSIS FROM WATSON ============')
         }
       })
