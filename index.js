@@ -187,13 +187,21 @@ function handleMessage(sender_psid, received_message) {
         } else {
           console.log('======== TONE ANALYSIS FROM WATSON ============')
           console.log(JSON.stringify(toneAnalysis, null, 1))
-          tone = toneAnalysis.document_tone.tones[0].tone_id
-          // console.log('TONE =====', tone, typeof tone)
-          // console.log(genres)
-          // console.log(tone)
-          // console.log('MANUAL GENRES TEST =====', genres[tone])
+          let tones = toneAnalysis.document_tone.tones
+          tone = tones.forEach(indivdualTone => {
+            let tempTone = {
+              score: 0,
+              tone_id: ''
+            }
+            if (individualTone.score > tempTone.score) {
+              tempTone = indivdualTone
+            }
+            return tempTone.tone_id
+          })
+          console.log('===== TONE WITH FOR EACH=======', tone)
+          // tone = toneAnalysis.document_tone.tones[0].tone_id
+
           finalGenre = genres[tone]
-          // console.log('FINAL GENRE =======', finalGenre)
 
           try {
             const spotifyUserToken = spotifyApi._credentials.accessToken
@@ -215,24 +223,13 @@ function handleMessage(sender_psid, received_message) {
                 'RESPONSE.DATA.TRACKS',
                 response.data.tracks[0].external_urls.spotify
               )
-              // console.log('*****WHOLE RESPONSE*****', response)
               finalSong = response.data.tracks[0].external_urls.spotify
-              console.log(
-                '======finalSong INSIDE of Spotify call=======',
-                finalSong
-              )
 
-              console.log(
-                '======finalSong OUTSIDE of Spotify call=======',
-                finalSong
-              )
               response = {
                 text: 'WOOF, I hope you enjoy this: ' + finalSong
               }
               counter = -1
 
-              console.log('====== COUNTER IS: ', counter)
-              console.log('====== CONCATENATED REPONSE IS: ', userResponse)
               counter++
               // Sends the response message
               callSendAPI(sender_psid, response)
@@ -242,23 +239,9 @@ function handleMessage(sender_psid, received_message) {
           } catch (err) {
             console.error(err)
           }
-
-          console.log('test')
-
           console.log('======== END OF TONE ANALYSIS FROM WATSON ============')
         }
       })
-
-      // console.log('!!!!!!!!!!!!!!! SPOTIFY API END HERE!!!!!!!!!')
-      //     console.log('======finalSong OUTSIDE of Spotify call=======', finalSong)
-      //     response = {
-      //       text: 'WOOF, I hope you enjoy this: ' + finalSong
-      //     }
-      //     counter = -1
-      //   }
-      // }
-      // console.log('====== COUNTER IS: ', counter)
-      // console.log('====== CONCATENATED REPONSE IS: ', userResponse)
     }
     counter++
     // Sends the response message
