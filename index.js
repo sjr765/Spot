@@ -191,8 +191,8 @@ function handleMessage(sender_psid, received_message) {
           console.log('TONE =====', tone, typeof tone)
           console.log(genres)
           console.log(tone)
-          console.log('MANUAL GENRES TEST =====', genres[tone])
-          finalGenre = genres.tone
+          console.log('MANUAL GENRES TEST =====', genres['tone'])
+          finalGenre = genres['tone']
           console.log('FINAL GENRE =======', finalGenre)
 
           console.log('======== END OF TONE ANALYSIS FROM WATSON ============')
