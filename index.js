@@ -198,6 +198,8 @@ function handleMessage(sender_psid, received_message) {
       counter = -1
     }
   }
+  console.log('====== COUNTER IS: ', counter)
+  console.log('====== CONCATENATED REPONSE IS: ', userResponse)
   counter++
   // Sends the response message
   callSendAPI(sender_psid, response)
