@@ -262,21 +262,3 @@ function callSendAPI(sender_psid, response) {
     }
   )
 }
-
-const {toneAnalyzer} = require('./toneAnalyzer')
-
-const toneParams = {
-  tone_input: {text: chatBotText},
-  content_type: 'application/json',
-  sentences: false
-}
-
-toneAnalyzer.tone(toneParams, function(error, toneAnalysis) {
-  if (error) {
-    console.log(error)
-  } else {
-    console.log('======== TONE ANALYSIS FROM WATSON ============')
-    console.log(JSON.stringify(toneAnalysis, null, 2))
-    console.log('======== END OF TONE ANALYSIS FROM WATSON ============')
-  }
-})
