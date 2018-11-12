@@ -116,12 +116,12 @@ app.get('/webhook', (req, res) => {
 let counter = 0
 let userResponse = ''
 const genres = {
-  anger: hardcore,
-  fear: chill,
-  sadness: acoustic,
-  analytical: electronic,
-  confident: rock,
-  tentative: indie
+  anger: 'hardcore',
+  fear: 'chill',
+  sadness: 'acoustic',
+  analytical: 'electronic',
+  confident: 'rock',
+  tentative: 'indie'
 }
 // Handles messages events
 function handleMessage(sender_psid, received_message) {
