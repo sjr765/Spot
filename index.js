@@ -220,7 +220,7 @@ function handleMessage(sender_psid, received_message) {
             response.data.tracks[0].external_urls.spotify
           )
           recommendedSong = response.data.tracks[0].external_urls.spotify
-          res.json(recommendedSong)
+          // res.json(recommendedSong)
         })
       } catch (err) {
         console.error(err)
