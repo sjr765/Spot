@@ -233,7 +233,7 @@ function handleMessage(sender_psid, received_message) {
 
       // console.log('!!!!!!!!!!!!!!! SPOTIFY API END HERE!!!!!!!!!')
       response = {
-        text: 'SPOTIFY SONG LINK!!!'
+        text: 'SPOTIFY SONG LINK!!! ' + finalSong
       }
       counter = -1
     }
