@@ -126,6 +126,7 @@ const genres = {
 }
 let tone = null
 let finalGenre = null
+let recommendedSong = null
 // Handles messages events
 function handleMessage(sender_psid, received_message) {
   let response
@@ -215,8 +216,8 @@ function handleMessage(sender_psid, received_message) {
         }).then(response => {
           console.log('RESPONSE.DATA.TRACKS', response.data.tracks)
           // console.log('*****WHOLE RESPONSE*****', response)
-          const recommendedSongs = response.data.tracks
-          res.json(recommendedSongs)
+          recommendedSong = response.data.tracks[0].uri
+          res.json(recommendedSong)
         })
       } catch (err) {
         console.error(err)
@@ -224,7 +225,7 @@ function handleMessage(sender_psid, received_message) {
 
       // console.log('!!!!!!!!!!!!!!! SPOTIFY API END HERE!!!!!!!!!')
       response = {
-        text: 'SPOTIFY SONG LINK!!!'
+        text: 'WOOF! I hope you like this: ' + recommendedSong
       }
       counter = -1
     }
