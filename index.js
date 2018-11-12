@@ -126,7 +126,6 @@ const genres = {
 }
 let tone = null
 let finalGenre = null
-let recommendedSong = null
 // Handles messages events
 function handleMessage(sender_psid, received_message) {
   let response
@@ -190,7 +189,7 @@ function handleMessage(sender_psid, received_message) {
           console.log(JSON.stringify(toneAnalysis, null, 1))
           tone = JSON.stringify(toneAnalysis.document_tone.tones[0].tone_id)
           console.log('TONE =====', tone, typeof tone)
-          console.log(genres)
+          console.log(genres.tone)
           console.log(tone)
           console.log('MANUAL GENRES TEST =====', genres.joy)
           finalGenre = genres[tone]
@@ -200,35 +199,37 @@ function handleMessage(sender_psid, received_message) {
         }
       })
 
-      try {
-        axios({
-          method: 'get',
-          url: 'https://api.spotify.com/v1/recommendations',
-          headers: {
-            Authorization: 'Bearer ' + spotifyUserToken
-          },
-          params: {
-            limit: '1',
-            market: 'US',
-            seed_genres: genres.joy,
-            min_popularity: '20'
-          }
-        }).then(response => {
-          console.log('RESPONSE.DATA.TRACKS', response.data.tracks[0])
-          console.log(
-            '*****WHOLE RESPONSE*****',
-            response.data.tracks[0].external_urls.spotify
-          )
-          recommendedSong = response.data.tracks[0].external_urls.spotify
-          res.json(recommendedSong)
-        })
-      } catch (err) {
-        console.error(err)
+      const spotifySong = async function(req, res, next) {
+        try {
+          await axios({
+            method: 'get',
+            url: 'https://api.spotify.com/v1/recommendations',
+            headers: {
+              Authorization: 'Bearer ' + spotifyUserToken
+            },
+            params: {
+              limit: '1',
+              market: 'US',
+              seed_genres: genres.joy,
+              min_popularity: '20'
+            }
+          }).then(response => {
+            console.log('RESPONSE.DATA.TRACKS', response.data.tracks[0])
+            console.log(
+              '*****WHOLE RESPONSE*****',
+              response.data.tracks[0].external_urls.spotify
+            )
+            let recommendedSong = response.data.tracks[0].external_urls.spotify
+            res.json(recommendedSong)
+          })
+        } catch (err) {
+          console.error(err)
+        }
       }
 
       // console.log('!!!!!!!!!!!!!!! SPOTIFY API END HERE!!!!!!!!!')
       response = {
-        text: 'WOOF! I hope you like this: ' + recommendedSong
+        text: 'WOOF! I hope you like this: ' + spotifySong
       }
       counter = -1
     }
