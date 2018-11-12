@@ -188,9 +188,9 @@ function handleMessage(sender_psid, received_message) {
           console.log('======== TONE ANALYSIS FROM WATSON ============')
           console.log(JSON.stringify(toneAnalysis, null, 1))
           let tone = JSON.stringify(toneAnalysis.document_tone.tones[0].tone_id)
-          console.log('TONE =====', tone)
+          console.log('TONE =====', tone, typeof tone)
           console.log('MANUAL GENRES TEST =====', genres['joy'])
-          let finalGenre = genres[tone]
+          let finalGenre = genres[String(tone)]
           console.log('FINAL GENRE =======', finalGenre)
 
           console.log('======== END OF TONE ANALYSIS FROM WATSON ============')
