@@ -153,17 +153,17 @@ function handleMessage(sender_psid, received_message) {
   // Check if the message contains text
   if (received_message.text) {
     // Create the payload for a basic text message
-    if (counter === 0 || counter === 1) {
+    if (counter === 0) {
       response = {
         text: `WOOF Hi there! I'm Spot the Spotify Dog. I'd love to give you some song recomendations based on how you're feeling today. Does that sound good to you?`
       }
     }
-    if (counter === 2) {
+    if (counter === 1) {
       if (received_message.text.includes('yes')) {
         response = {
           text: 'WOOF, hmmm.... lets start over!'
         }
-        counter = 0
+        counter = -1
       } else {
         response = {
           text:
@@ -171,31 +171,31 @@ function handleMessage(sender_psid, received_message) {
         }
       }
     }
-    if (counter === 3) {
+    if (counter === 2) {
       userResponse += received_message.text + ' '
       response = {
         text: ' WOOF How were you feeling when you woke up today?'
       }
     }
-    if (counter === 4) {
+    if (counter === 3) {
       userResponse += received_message.text + ' '
       response = {
         text:
           "WOOF, ok, WOOF and tell me your favorite or least favorite thing about what's happened since you woke up."
       }
     }
-    if (counter === 5) {
+    if (counter === 4) {
       userResponse += received_message.text + ' '
       response = {
         text: 'WOOF, ok I have your song ready! Are you ready WOOF?!'
       }
       counter++
     }
-    if (counter === 6) {
+    if (counter === 5) {
       response = {
         text: 'SPOTIFY SONG LINK!!!'
       }
-      counter = 0
+      counter = -1
     }
   }
   counter++
