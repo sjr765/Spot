@@ -159,12 +159,12 @@ function handleMessage(sender_psid, received_message) {
       }
     }
     if (counter === 1) {
-      // if (!received_message.text.toLowerCase().includes('yes')) {
-      //   response = {
-      //     text: 'WOOF, hmmm.... lets start over!'
-      //   }
-      //   counter = -1
-      // }
+      if (!received_message.text.toLowerCase().includes('yes')) {
+        response = {
+          text: 'WOOF, hmmm.... lets start over!'
+        }
+        counter = -1
+      }
       response = {
         text:
           'WOOF Perfect, Lets get started! WOOF Tell what your favorite personality trait is (about your self) WOOF'
