@@ -172,7 +172,7 @@ function handleMessage(sender_psid, received_message) {
       }
     }
     if (counter === 3) {
-      userREsponse += received_message.text + ' '
+      userResponse += received_message.text + ' '
       response = {
         text: ' WOOF How were you feeling when you woke up today?'
       }
