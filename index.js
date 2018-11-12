@@ -121,7 +121,8 @@ const genres = {
   sadness: 'acoustic',
   analytical: 'electronic',
   confident: 'rock',
-  tentative: 'indie'
+  tentative: 'indie',
+  joy: 'pop'
 }
 // Handles messages events
 function handleMessage(sender_psid, received_message) {
@@ -132,7 +133,7 @@ function handleMessage(sender_psid, received_message) {
     // Create the payload for a basic text message
     if (counter === 0) {
       response = {
-        text: `WOOF Hi there! I'm Spot the Spotify Dog. I'd love to give you some song recomendations based on how you're feeling today. Does that sound good to you?`
+        text: `WOOF Hi there! I'm Spot the Spotify Dog. I'd love to give you a song recomendation based on how you're feeling today. Does that sound good to you?`
       }
     }
     if (counter === 1) {
@@ -164,7 +165,7 @@ function handleMessage(sender_psid, received_message) {
     if (counter === 4) {
       userResponse += received_message.text + '. '
       response = {
-        text: 'WOOF, ok I have your song ready! Are you ready WOOF?!'
+        text: 'WOOF, ok I have your song! Are you ready WOOF?!'
       }
     }
     if (counter === 5) {
@@ -185,7 +186,10 @@ function handleMessage(sender_psid, received_message) {
           console.log('======== TONE ANALYSIS FROM WATSON ============')
           console.log(JSON.stringify(toneAnalysis, null, 1))
           // let tone = JSON.stringify(toneAnalysis.document_tone.)
-          // console.log(JSON.stringify)
+          console.log(
+            'SINGLE TONE =======',
+            JSON.stringify(toneAnalysis.document_tone.tones[0].tone_id)
+          )
           console.log('======== END OF TONE ANALYSIS FROM WATSON ============')
         }
       })
